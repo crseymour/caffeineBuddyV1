@@ -1,0 +1,34 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Accounts</title>
+        <link rel="stylesheet" href="{% static 'oldStyles.css' %}">
+    </head>
+    <body>
+        <header class="wrapper">
+            <h1><a href="{% url 'home' %}"><img src="https://cdn.glitch.com/d959f5b2-4107-480c-a30a-4ab5f8968f79%2Fcoffee_cup%20(2).png?1558547562811" alt="coffee cup" height="50px"></a></h1>
+            <nav>
+              <ul>
+                {% if user.is_authenticated %}
+                  <li>
+                    <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit">Logout</button>
+                    </form>
+                  </li>
+                {% else %}
+                  <li> <a href="{% url 'accounts:login' %}">Login</a></li>
+                  <li> <a href="{% url 'accounts:signup' %}">Signup</a></li>
+                {% endif %}
+              </ul>
+            </nav>
+        </header>
+        <div class="wrapper">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
